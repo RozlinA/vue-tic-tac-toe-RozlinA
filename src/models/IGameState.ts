@@ -1,7 +1,13 @@
 import { Player } from "./Player";
 
-export class IGameState {
-  constructor(
-    public players: Player[] // public pointsHistory: pointsHistory[], // public showHistory: false
-  ) {}
+export interface IGameState {
+  players: Player[];
+  // score: Score[];
+  showResults: boolean;
 }
+
+// export class IGameState {
+//   constructor(
+//     public players: Player[] // public pointsHistory: pointsHistory[], // public showHistory: false
+//   ) {}
+// }

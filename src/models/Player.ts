@@ -1,3 +1,11 @@
+export class Player {
+  points: number;
+
+  constructor(public playerName: string, public id: number) {
+    this.points = 0;
+  }
+}
+
 // export class Player {
 //   constructor(
 //     public name: string,
@@ -6,11 +14,11 @@
 //   ) {}
 // }
 
-export class Player {
-  turn: boolean;
-  points: number;
+// export class Player {
+//   turn: boolean;
+//   points: number;
 
-  constructor(public playerName: string, public id: number) {
-    (this.turn = false), (this.points = 0);
-  }
-}
+//   constructor(public playerName: string, public id: number) {
+//     (this.turn = false), (this.points = 0);
+//   }
+// }
