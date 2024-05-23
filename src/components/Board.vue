@@ -1,54 +1,163 @@
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { Player } from '../models/Player';
 
   interface PlayerProps {
-  players: Player[]
-}
+    players: Player[];
+  }
 
-const props = defineProps<PlayerProps>();
+  const props = defineProps<PlayerProps>();
 
-const gameField = ["", "", "", "", "", "", "", "", ""];
+  const boardGame = ref(["", "", "", "", "", "", "", "", ""]);
 
-const handleSquareClick = () => {
-  if (props.players[0].id == 0){
-    return "x";
-  } 
-}
+  const currentPlayer = ref(Math.floor(Math.random()*2));
+  console.log(currentPlayer); 
 
-let randomNumber = Math.floor(Math.random()*2)
-console.log(randomNumber % 2)
+  const handleGameMoves = (i:number) => {
+    if (boardGame.value[i] === ""){
+      if (currentPlayer.value === 0) {
+        boardGame.value[i] = "X";
+        handleWinner();
+        currentPlayer.value = 1;
+      
+      }
+      else {
+        boardGame.value[i] = "O";
+        handleWinner();
+        currentPlayer.value = 0;
+      }
+    }
+  };
+
+  const handleWinner = () => {
+    const winner = checkWinner();
+    if (winner === true){
+      console.log ("Hurraaa")
+    }
+    return winner;
+  };
+
+  const checkWinner = () => {
+    if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
+      if(boardGame.value[0] === boardGame.value[1] && boardGame.value[0] === boardGame.value[2]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[3] === "X" || boardGame.value[3] === "O") {
+      if(boardGame.value[3] === boardGame.value[4] && boardGame.value[3] === boardGame.value[5]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[6] === "X" || boardGame.value[6] === "O") {
+      if(boardGame.value[6] === boardGame.value[7] && boardGame.value[6] === boardGame.value[8]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
+      if(boardGame.value[0] === boardGame.value[3] && boardGame.value[0] === boardGame.value[6]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[1] === "X" || boardGame.value[1] === "O") {
+      if(boardGame.value[1] === boardGame.value[4] && boardGame.value[1] === boardGame.value[7]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[2] === "X" || boardGame.value[2] === "O") {
+      if(boardGame.value[2] === boardGame.value[5] && boardGame.value[2] === boardGame.value[8]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
+      if(boardGame.value[0] === boardGame.value[4] && boardGame.value[0] === boardGame.value[8]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    if(boardGame.value[2] === "X" || boardGame.value[2] === "O") {
+      if(boardGame.value[2] === boardGame.value[4] && boardGame.value[2] === boardGame.value[6]){
+        console.log ("vi har en vinnare!")
+        return true;
+      }
+    };
+    return false;
+  }
+
+  const checkTie = () => {
+    let tie = true;
+    for (let i = 0; i < boardGame.value.length; i++){
+      if (boardGame.value[i] === ""){
+        tie = false;
+      }
+   };
+    return tie;
+  };
+
+  const handleResetPlayers = () => {
+    props.players.splice(0, 2);
+  }
+
+  const handleNewGame = () => {
+    for (let i = 0; i < boardGame.value.length; i++){
+      boardGame.value[i] = "";
+    }
+  }
+
 </script>
 
 <template>
-  <p v-if="randomNumber % 2 === 0"> {{ players[0].playerName + "'s turn" }}</p>
-  <p v-else> {{ players[1].playerName + "'s turn" }}</p>
+  <h3 v-if="handleWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
+  <h3 v-else-if="handleWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
+  <h3 v-if="checkTie() && !handleWinner()">It's a tie!</h3>
 
-  <div class="gameBoard">
-    <div class="square" v-for="n in gameField" @click="handleSquareClick">
-    {{ n }}
+  <section v-if="!checkTie()">
+  <section v-if="!handleWinner()">
+    <h3 v-if="currentPlayer % 2 === 0"> {{ players[0].playerName + "'s turn (X)" }}</h3>
+    <h3 v-else> {{ players[1].playerName + "'s turn (O)" }}</h3>
+
+    <div class="board">
+      <div class="square" v-for="(square, i) in boardGame" :key="i" @click="handleGameMoves(i)">
+      {{ square }}
+      </div>
     </div>
-  </div>
- 
+  </section>
+  </section>
+
+  <section>
+    <button>Score</button>
+    <button @click="handleNewGame">Play again</button>
+    <button @click="handleResetPlayers">Reset players</button>
+  </section>
+   
 </template>
 
 <style scoped>
- .gameBoard {
-  
-	width: 600px;
-	height: 600px;
-  border: 3px solid #2c3e50;	
+ .board {
+  width: 500px;
+	height: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #2c3e50;	
 	display: grid;
 	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
- }
+}
 
- .square {
-  border: 3px solid #2c3e50;
-  /* border-radius: 2px;
-  font-family: Helvetica; */
+.square {
+  border: 2px solid #2c3e50;
   font-weight: bold;
   font-size: 4em;
   display: flex;
   justify-content: center;
   align-items: center;
- }
+}
+
+button {
+  margin: 15px;
+}
 </style>
