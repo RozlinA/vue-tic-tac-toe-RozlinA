@@ -12,11 +12,11 @@ const state = ref<IGameState>({
 
 let currentId = 0;
 
-const handleAddPlayer = (userInput: string) => {
-  if (userInput.trim().length > 0) {
-    let player = new Player (userInput, currentId);
+const handleAddPlayer = (playerInput: string) => {
+  if (playerInput.trim().length > 0){
+    let player = new Player (playerInput, currentId);
     state.value.players.push(player);
-    console.log(player)
+    console.log(player);
     currentId++;
   }
 }
@@ -24,8 +24,9 @@ const handleAddPlayer = (userInput: string) => {
 </script>
 
 <template>
-  <AddPlayer :players="state.players" v-if="state.players.length < 2" @add-player="handleAddPlayer"></AddPlayer>
-  <Board v-if="state.players.length == 2" :players="state.players"></Board>
+  <h1 v-if="state.players.length < 2">Tic Tac Toe</h1>
+  <AddPlayer v-if="state.players.length < 2" :players="state.players" @add-player="handleAddPlayer"></AddPlayer>
+  <Board v-if="state.players.length === 2" :players="state.players"></Board>
 </template>
 
 <style scoped>

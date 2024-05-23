@@ -1,33 +1,46 @@
 <script setup lang="ts">
-import { Player } from '../models/Player';
-import { ref } from 'vue'
+  import { Player } from '../models/Player';
+  import { ref } from 'vue'
 
-interface PlayerProps {
-  players: Player[]
-}
+  const playerInput = ref("");
 
-defineProps<PlayerProps>();
+  interface PlayerProps{
+    players: Player[]
+  }
 
-const userInput = ref("");
+  defineProps<PlayerProps>();
 
-defineEmits<{
-  (e: "addPlayer", userInput:string):void
-}>();
+  const emit = defineEmits<{
+    (e: "addPlayer", playerInput:string):void;
+  }>();
 
+  const handleClick = () => {
+    if (playerInput.value !== ""){
+      emit ("addPlayer", playerInput.value);
+      playerInput.value = "";
+    }
+  };
 
 </script>
 
 <template>
-  <section>
-    <h3 v-if="players.length==0">Lägg till spelare X</h3>
-    <h3 v-else-if="players.length < 2 && players.length > 0">Lägg till spelare O</h3>
-    <label for="player">Namn:</label>
-    <input type="text" v-model="userInput">
-    <button @click="$emit('addPlayer', userInput)">Spara</button>
-  </section>
-
+<section>
+  <h3>Start a new game</h3>
+  <label for="player">{{ players.length == 0 ? "Add player 'X':" : "Add player 'O':" }}</label>
+  <input type="text" placeholder="player name" v-model="playerInput">
+  <button @click="handleClick">Save</button>
+</section>
 </template>
 
 <style scoped>
+  h3 {
+    padding-bottom: 15px;
+    font-weight: bold;
+  }
 
+  input {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 4px;
+  }
 </style>
