@@ -17,22 +17,35 @@
     if (boardGame.value[i] === ""){
       if (currentPlayer.value === 0) {
         boardGame.value[i] = "X";
-        handleWinner();
         currentPlayer.value = 1;
-      
       }
       else {
         boardGame.value[i] = "O";
-        handleWinner();
         currentPlayer.value = 0;
       }
+      const winner = checkWinner();
+      handleWinner(winner);
     }
   };
 
-  const handleWinner = () => {
-    const winner = checkWinner();
+  // const handleWinner = () => {
+  //   const winner = checkWinner();
+  //   if (winner === true){
+  //     console.log ("Hurraaa")
+  //   }
+  //   return winner;
+  // };
+
+  const handleWinner = (winner:boolean) => {
     if (winner === true){
-      console.log ("Hurraaa")
+      console.log ("Hurraaa");
+      if(currentPlayer.value === 0){
+        props.players[1].score++;
+      }
+      else{
+        props.players[0].score++;
+      }
+      console.log(props.players[0], props.players[1])
     }
     return winner;
   };
@@ -112,12 +125,12 @@
 </script>
 
 <template>
-  <h3 v-if="handleWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
-  <h3 v-else-if="handleWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
-  <h3 v-if="checkTie() && !handleWinner()">It's a tie!</h3>
+  <h3 v-if="checkWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
+  <h3 v-else-if="checkWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
+  <h3 v-if="checkTie() && !checkWinner()">It's a tie!</h3>
 
   <section v-if="!checkTie()">
-  <section v-if="!handleWinner()">
+  <section v-if="!checkWinner()">
     <h3 v-if="currentPlayer % 2 === 0"> {{ players[0].playerName + "'s turn (X)" }}</h3>
     <h3 v-else> {{ players[1].playerName + "'s turn (O)" }}</h3>
 

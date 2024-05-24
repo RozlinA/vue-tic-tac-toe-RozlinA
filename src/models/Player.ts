@@ -1,8 +1,8 @@
 export class Player {
-  points: number;
+  score: number;
 
   constructor(public playerName: string, public id: number) {
-    this.points = 0;
+    this.score = 0;
   }
 }
 
