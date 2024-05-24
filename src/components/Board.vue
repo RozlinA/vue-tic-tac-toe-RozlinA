@@ -13,6 +13,8 @@
   const currentPlayer = ref(Math.floor(Math.random()*2));
   console.log(currentPlayer); 
 
+  const showScore = ref(false);
+
   const handleGameMoves = (i:number) => {
     if (boardGame.value[i] === ""){
       if (currentPlayer.value === 0) {
@@ -114,25 +116,28 @@
 
   const handleResetPlayers = () => {
     props.players.splice(0, 2);
-  }
+  };
 
   const handleNewGame = () => {
     for (let i = 0; i < boardGame.value.length; i++){
       boardGame.value[i] = "";
     }
-  }
+  };
 
+  const toggleShowScore = () => {
+    showScore.value = !showScore.value;
+  };
 </script>
 
 <template>
-  <h3 v-if="checkWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
-  <h3 v-else-if="checkWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
+  <h3 class="winner" v-if="checkWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
+  <h3 class="winner" v-else-if="checkWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
   <h3 v-if="checkTie() && !checkWinner()">It's a tie!</h3>
 
   <section v-if="!checkTie()">
   <section v-if="!checkWinner()">
-    <h3 v-if="currentPlayer % 2 === 0"> {{ players[0].playerName + "'s turn (X)" }}</h3>
-    <h3 v-else> {{ players[1].playerName + "'s turn (O)" }}</h3>
+    <h3 class="playerTurn" v-if="currentPlayer % 2 === 0"> {{ players[0].playerName + "'s turn (X)" }}</h3>
+    <h3 class="playerTurn" v-else> {{ players[1].playerName + "'s turn (O)" }}</h3>
 
     <div class="board">
       <div class="square" v-for="(square, i) in boardGame" :key="i" @click="handleGameMoves(i)">
@@ -142,11 +147,19 @@
   </section>
   </section>
 
+  <section v-if="showScore">
+    <h3>Score History</h3>
+    <p>{{ props.players[0].playerName + ": " + props.players[0].score}}</p>
+    <p>{{ props.players[1].playerName + ": " + props.players[1].score}}</p>
+  </section>
+
   <section>
-    <button>Score</button>
+    <button @click="toggleShowScore">Score</button>
     <button @click="handleNewGame">Play again</button>
     <button @click="handleResetPlayers">Reset players</button>
   </section>
+
+ 
    
 </template>
 
@@ -172,5 +185,13 @@
 
 button {
   margin: 15px;
+}
+
+.winner {
+  font-size: 64px;
+}
+
+.playerTurn {
+  font-size: 32px;
 }
 </style>
