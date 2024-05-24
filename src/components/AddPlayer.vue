@@ -20,7 +20,6 @@
       playerInput.value = "";
     }
   };
-
 </script>
 
 <template>

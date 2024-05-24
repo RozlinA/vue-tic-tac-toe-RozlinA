@@ -30,14 +30,6 @@
     }
   };
 
-  // const handleWinner = () => {
-  //   const winner = checkWinner();
-  //   if (winner === true){
-  //     console.log ("Hurraaa")
-  //   }
-  //   return winner;
-  // };
-
   const handleWinner = (winner:boolean) => {
     if (winner === true){
       console.log ("Hurraaa");
@@ -55,49 +47,41 @@
   const checkWinner = () => {
     if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
       if(boardGame.value[0] === boardGame.value[1] && boardGame.value[0] === boardGame.value[2]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[3] === "X" || boardGame.value[3] === "O") {
       if(boardGame.value[3] === boardGame.value[4] && boardGame.value[3] === boardGame.value[5]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[6] === "X" || boardGame.value[6] === "O") {
       if(boardGame.value[6] === boardGame.value[7] && boardGame.value[6] === boardGame.value[8]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
       if(boardGame.value[0] === boardGame.value[3] && boardGame.value[0] === boardGame.value[6]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[1] === "X" || boardGame.value[1] === "O") {
       if(boardGame.value[1] === boardGame.value[4] && boardGame.value[1] === boardGame.value[7]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[2] === "X" || boardGame.value[2] === "O") {
       if(boardGame.value[2] === boardGame.value[5] && boardGame.value[2] === boardGame.value[8]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[0] === "X" || boardGame.value[0] === "O") {
       if(boardGame.value[0] === boardGame.value[4] && boardGame.value[0] === boardGame.value[8]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
     if(boardGame.value[2] === "X" || boardGame.value[2] === "O") {
       if(boardGame.value[2] === boardGame.value[4] && boardGame.value[2] === boardGame.value[6]){
-        console.log ("vi har en vinnare!")
         return true;
       }
     };
@@ -158,9 +142,6 @@
     <button @click="handleNewGame">Play again</button>
     <button @click="handleResetPlayers">Reset players</button>
   </section>
-
- 
-   
 </template>
 
 <style scoped>

@@ -6,8 +6,7 @@ import Board from './Board.vue';
 import AddPlayer from './AddPlayer.vue'
 
 const state = ref<IGameState>({
-    players: [],
-    showResults: false
+    players: []
   });
 
 let currentId = 0;
