@@ -29,5 +29,14 @@ const handleAddPlayer = (playerInput: string) => {
 </template>
 
 <style scoped>
+  h1 {
+    font-size: 48px;
+  color: #646cff;
+  }
 
+  @media only screen and (min-width: 600px) {
+    h1 {
+      font-size: 96px;
+    }
+  }
 </style>

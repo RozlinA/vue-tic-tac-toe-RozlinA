@@ -114,8 +114,8 @@
 </script>
 
 <template>
-  <h3 class="winner" v-if="checkWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!" }} </h3>
-  <h3 class="winner" v-else-if="checkWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!" }} </h3>
+  <h3 class="winner" v-if="checkWinner() && currentPlayer % 2 === 0"> {{ players[1].playerName + " is the winner!\u{1F389}" }} </h3>
+  <h3 class="winner" v-else-if="checkWinner() && currentPlayer % 2 === 1"> {{ players[0].playerName + " is the winner!\u{1F389}" }} </h3>
   <h3 v-if="checkTie() && !checkWinner()">It's a tie!</h3>
 
   <section v-if="!checkTie()">
@@ -138,16 +138,20 @@
   </section>
 
   <section>
-    <button @click="toggleShowScore">Score</button>
+    <button @click="toggleShowScore">{{ showScore ? "Hide score" : "Show score" }}</button>
     <button @click="handleNewGame">Play again</button>
     <button @click="handleResetPlayers">Reset players</button>
   </section>
 </template>
 
 <style scoped>
+h3 {
+  color: #646cff;
+}
+
  .board {
-  width: 500px;
-	height: 500px;
+  width: 300px;
+	height: 300px;
   margin-top: 10px;
   margin-bottom: 10px;
   border: 2px solid #2c3e50;	
@@ -169,10 +173,35 @@ button {
 }
 
 .winner {
-  font-size: 64px;
+  font-size: 48px;
 }
 
 .playerTurn {
   font-size: 32px;
+}
+
+@media only screen and (min-width: 600px) {
+  .board {
+  width: 500px;
+	height: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #2c3e50;	
+	display: grid;
+	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  }
+
+  .square {
+  border: 2px solid #2c3e50;
+  font-weight: bold;
+  font-size: 4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+
+  .winner {
+  font-size: 64px;
+}
 }
 </style>
